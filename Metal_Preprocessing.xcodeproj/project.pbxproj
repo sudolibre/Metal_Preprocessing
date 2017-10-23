@@ -12,6 +12,7 @@
 		FC6A76E11F9E796F00F1F870 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6A76DF1F9E796F00F1F870 /* Main.storyboard */; };
 		FC6A76E31F9E796F00F1F870 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6A76E21F9E796F00F1F870 /* Assets.xcassets */; };
 		FC6A76E61F9E796F00F1F870 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6A76E41F9E796F00F1F870 /* LaunchScreen.storyboard */; };
+		FC6A76F01F9E7D9600F1F870 /* WarpKernel.metal in Sources */ = {isa = PBXBuildFile; fileRef = FC6A76EF1F9E7D9600F1F870 /* WarpKernel.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		FC6A76E21F9E796F00F1F870 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC6A76E51F9E796F00F1F870 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC6A76E71F9E796F00F1F870 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC6A76EF1F9E7D9600F1F870 /* WarpKernel.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = WarpKernel.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 		FC6A76CF1F9E796F00F1F870 = {
 			isa = PBXGroup;
 			children = (
+				FC6A76EF1F9E7D9600F1F870 /* WarpKernel.metal */,
 				FC6A76DA1F9E796F00F1F870 /* Metal_Preprocessing */,
 				FC6A76D91F9E796F00F1F870 /* Products */,
 			);
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC6A76F01F9E7D9600F1F870 /* WarpKernel.metal in Sources */,
 				FC6A76DE1F9E796F00F1F870 /* ViewController.swift in Sources */,
 				FC6A76DC1F9E796F00F1F870 /* AppDelegate.swift in Sources */,
 			);
@@ -212,6 +216,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -263,6 +269,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
