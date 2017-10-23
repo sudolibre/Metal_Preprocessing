@@ -9,14 +9,13 @@ final class ViewController: UIViewController {
     fileprivate var transformedImages: [CIImage] = []
     fileprivate var reference: CVPixelBuffer? = nil
 
-
-    let warpKernel: CIWarpKernel = {
+    fileprivate let warpKernel: CIWarpKernel = {
         let url = Bundle.main.url(forResource: "default", withExtension: ".metallib")!
         let data = try! Data.init(contentsOf: url)
         return try! CIWarpKernel(functionName: "warpHomography", fromMetalLibraryData: data)
     }()
 
-    let medianReductionKernel: CIColorKernel = {
+    fileprivate let medianReductionKernel: CIColorKernel = {
         let url = Bundle.main.url(forResource: "default", withExtension: ".metallib")!
         let data = try! Data.init(contentsOf: url)
         return try! CIColorKernel(functionName: "medianReduction5", fromMetalLibraryData: data)
@@ -38,13 +37,12 @@ final class ViewController: UIViewController {
             captureSession.canAddInput(captureDeviceInput) {
             captureSession.addInput(captureDeviceInput)
         }
+
         let captureVideoOutput = AVCaptureVideoDataOutput()
         captureVideoOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: .userInitiated))
-
         if captureSession.canAddOutput(captureVideoOutput) {
             captureSession.addOutput(captureVideoOutput)
         }
-        
     }
 
     func homographicTransform(from image: CVPixelBuffer, to reference: CVPixelBuffer) -> matrix_float3x3? {
