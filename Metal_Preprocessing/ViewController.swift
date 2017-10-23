@@ -105,8 +105,10 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
 
         let transform = homographicTransform(from: reference, to: pixelBuffer)!
-        let ref = CIImage(cvPixelBuffer: pixelBuffer)
-        let transformedBuffer = warpKernel.apply(extent: extent, roiCallback: { _,_ in return CGRect.null }, image: ref, arguments: [transform])!
+        let transformedBuffer = warpKernel.apply(extent: extent,
+                                                 roiCallback: { _,_ in return CGRect.null },
+                                                 image: CIImage(cvPixelBuffer: pixelBuffer),
+                                                 arguments: [transform])!
         transformedImages.append(transformedBuffer)
     }
 }
