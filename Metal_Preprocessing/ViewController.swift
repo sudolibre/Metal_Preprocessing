@@ -60,8 +60,8 @@ final class ViewController: UIViewController {
 
     func handleBarcodeRequest(request: VNRequest, error: Error?) {
         guard let payloads = request.results?.flatMap({ ($0 as! VNBarcodeObservation).payloadStringValue }),
-         !payloads.isEmpty else {
-            return
+            !payloads.isEmpty else {
+                return
         }
         print(payloads)
     }
@@ -82,12 +82,12 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let height = CVPixelBufferGetHeight(pixelBuffer)
         let extent = CGRect(x: 0, y: 0, width: width, height: height)
 
-        if case 0..<5 = transformedImages.count {
-            let transform = homographicTransform(from: reference, to: pixelBuffer)!
-            let ref = CIImage(cvPixelBuffer: pixelBuffer)
-            let transformedBuffer = warpKernel.apply(extent: extent, roiCallback: { _,_ in return CGRect.null }, image: ref, arguments: [transform])!
-            transformedImages.append(transformedBuffer)
-        } else {
+        if transformedImages.count == 5 {
+            defer {
+                self.reference = nil
+                transformedImages = []
+            }
+
             guard let final = medianReductionKernel.apply(extent: extent, roiCallback: { _,_ in return CGRect.null} , arguments: transformedImages + [reference]) else {
                 return
             }
@@ -102,9 +102,11 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
             let detectBarcodeRequest = VNDetectBarcodesRequest(completionHandler: handleBarcodeRequest)
             detectBarcodeRequest.symbologies = [.code39, .code128]
             try? imageRequestHandler.perform([detectBarcodeRequest])
-
-            self.reference = nil
-            transformedImages = []
         }
+
+        let transform = homographicTransform(from: reference, to: pixelBuffer)!
+        let ref = CIImage(cvPixelBuffer: pixelBuffer)
+        let transformedBuffer = warpKernel.apply(extent: extent, roiCallback: { _,_ in return CGRect.null }, image: ref, arguments: [transform])!
+        transformedImages.append(transformedBuffer)
     }
 }
